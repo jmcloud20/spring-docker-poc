@@ -5,3 +5,6 @@
     * mvn clean package && java -jar target/spring-docker-poc.war
     * http://localhost:8080/hello
 * Create properties file and print variables.
+    * mvn clean package && java -jar target/spring-docker-poc.war --spring.config.location="sample-external-file.properties"
+* Load the image to docker container.
+    * Create a docker file.    
