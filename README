@@ -1,0 +1,7 @@
+* Tested exploded war in Tomcat 9.0.27 server.
+    * http://localhost:8080/spring-docker-poc/hello
+    * jar -xvf *.war
+* Tested running jar file.
+    * mvn clean package && java -jar target/spring-docker-poc.war
+    * http://localhost:8080/hello
+* Create properties file and print variables.
