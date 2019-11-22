@@ -1,3 +1,13 @@
+FROM maven:3.5.2-jdk-8-alpine AS MAVEN_BUILD
+
+COPY pom.xml /build/
+
+COPY src /build/src/
+
+WORKDIR /build/
+
+RUN mvn clean package
+
 # Define base image.
 FROM openjdk:8-jdk-alpine
 
@@ -6,16 +16,12 @@ WORKDIR  /usr/src/sample-maven-app
 
 RUN mkdir conf
 
-ADD target/spring-docker-poc.war .
+COPY --from=MAVEN_BUILD /build/target/spring-docker-poc.war .
 
 ADD conf/sample-external-file.properties ./conf
 
-#VOLUME /conf
-
-
-#RUN java -jar target/spring-docker-poc.war --spring.config.location="sample-external-file.properties"
+# Run the spring application using the defined property file.
 ENTRYPOINT [ "java","-jar","spring-docker-poc.war","--spring.config.location=conf/sample-external-file.properties" ]
-#ENTRYPOINT [ "java","-jar","spring-docker-poc.war"]
 
 # Expose port 8080
 EXPOSE 8080
