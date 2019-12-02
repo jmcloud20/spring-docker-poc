@@ -8,3 +8,7 @@
     * mvn clean package && java -jar target/spring-docker-poc.war --spring.config.location="sample-external-file.properties"
 * Load the image to docker container.
     * Create a docker file.    
+
+Notes:
+* maven container .M2 is not mapped in the host .m2 so would always download dependencies when compiling.
+* Restart is needed whenever a variable value is changed inside the property file.
