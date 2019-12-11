@@ -33,6 +33,7 @@ public class TomcatController{
     };
 
     private Supplier<Collection<String>> helloTest = () -> {
+        System.out.println("This is to simulate if volume mount maven is possible.");
         return IntStream.range(0, 10)
             .mapToObj(i -> "Hello number " + i)
             .collect(Collectors.toList());

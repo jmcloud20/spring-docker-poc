@@ -12,14 +12,20 @@ docker stop sample-maven-app
 echo -- make sure image sample-maven-app does not exist.
 docker rmi jmgarcia214/sample-maven-app
 
-echo -- run maven test
-mvn test
+# echo -- run maven test
+# mvn test
 
-echo -- run maven build
-mvn clean package
+# echo -- run maven build
+# mvn clean package
 
 echo -- build image using Dockerfile. 
 docker build . -t jmgarcia214/sample-maven-app
 
 echo -- run deploy-image to create container.
-docker run -p 8080:8080 -v d:/tmp/sample-maven-app:/usr/src/sample-maven-app/conf --name=sample-maven-app --rm jmgarcia214/sample-maven-app
+# docker-compose up
+docker run -p 8080:8080 \
+	-v d:/tmp/sample-maven-app:/usr/src/sample-maven-app/conf \
+	-v c:/Users/81255820/.m2:/root/.m2 \
+	--name sample-maven-app \
+	--rm \
+	jmgarcia214/sample-maven-app
