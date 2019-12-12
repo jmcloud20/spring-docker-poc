@@ -35,11 +35,14 @@ pipeline{
             steps{
                 echo "========Stage 2 - Create / Update a docker image========"
                 // For windows machine.
-                // Create a build and tag image according to jenkins BUILD_NUMBER
+                
+                echo "-- Create a build and tag image according to jenkins BUILD_NUMBER"
                 bat "docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
-                // Update latest image version
+                
+                echo "-- Update latest image version" 
                 bat "docker tag jmgarcia214/sample-maven-app:latest jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
-                // Push both version and latest image.
+                
+                echo "-- Push both version and latest image."
                 bat "docker push jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
                 bat "docker push jmgarcia214/sample-maven-app:latest"
                 // For linux machine
@@ -51,17 +54,16 @@ pipeline{
         stage("Stage 3  - Deploy image to current workspace."){
             steps{
                 echo "========Stage - Deploy Image========"
-                // Run image on current machine.
+
+                echo "-- make sure container sample-maven-app is not running."
+                bat "docker stop sample-maven-app:latest"
+
+                echo "-- make sure image sample-maven-app does not exist."
+                bat "docker rmi jmgarcia214/sample-maven-app:latest"
+                
+                echo "-- Run image on current machine."
                 bat "docker run -p 8080:8080 -v d:/tmp/sample-maven-app:/usr/src/sample-maven-app/conf -v c:/Users/81255820/.m2:/root/.m2 --name sample-maven-app --rm jmgarcia214/sample-maven-app:latest"
             }
-        }
-
-        // Stage  - Description
-        // stage("Stage  - Description"){
-        //     steps{
-        //         echo "========Stage - Description========"
-        //     }
-        // }
-        
+        }        
     }
 }
