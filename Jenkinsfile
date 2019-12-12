@@ -4,6 +4,13 @@ pipeline{
     */
     agent any
     stages{       
+        // Template for new stage  - Description
+        // stage("Stage  - Description"){
+        //     steps{
+        //         echo "========Stage - Description========"
+        //     }
+        // }
+
         // Stage 1 - Build, Test then package.
         stage("Stage 1 - Build, Test then package"){
             steps{
@@ -23,11 +30,23 @@ pipeline{
                 }
             }
         }
-        // Stage 2 - Create a docker container.
-        stage("Stage 2 - Create a docker container"){
+        // Stage 2 - Create / Update a docker image.
+        stage("Stage 2 - Create / Update a docker image"){
             steps{
-                echo "========Stage 2 - Create a docker container========"
+                echo "========Stage 2 - Create / Update a docker image========"
+                // For windows machine.
+                // bat docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}
+                // For linux machine
+                sh docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}
             }
         }
+
+        // Stage  - Description
+        // stage("Stage  - Description"){
+        //     steps{
+        //         echo "========Stage - Description========"
+        //     }
+        // }
+        
     }
 }
