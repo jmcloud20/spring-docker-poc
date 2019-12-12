@@ -3,26 +3,30 @@ pipeline{
     * the jenkins workspace / environment for the entire pipeline.
     */
     agent any
-    stages{
-        // Stage 1 - Check out from SCM
-        stage("Stage 1 - Check out from SCM"){
+    stages{       
+        // Stage 1 - Build, Test then package.
+        stage("Stage 1 - Build, Test then package"){
             steps{
-                echo "========Stage 1 - Check out from SCM========"
-                checkout scm
+                echo "========Stage 1 - Build, Test then package========"
+                // For windows machine.
+                bat 'mvn clean package'
+                // For linux machine
+                // sh 'mvn clean package'
+            }
+            post{
+                success{
+                    echo "========Success Stage 1 - Archiving successful build========"
+                    archiveArtifacts artifacts : '**/*.war'
+                }
+                failure{
+                    echo "========Failed Stage 1 - Build, Test then package========"
+                }
             }
         }
-
-        // Stage 2 - Build, Test then package.
-        stage("Stage 2 - Build, Test then package"){
+        // Stage 2 - Create a docker container.
+        stage("Stage 2 - Create a docker container"){
             steps{
-                echo "========Stage 2 - Build, Test then package========"
-            }
-        }
-
-        // Stage 3 - Create a docker container.
-        stage("Stage 3 - Create a docker container"){
-            steps{
-                echo "========Stage 3 - Create a docker container========"
+                echo "========Stage 2 - Create a docker container========"
             }
         }
     }
