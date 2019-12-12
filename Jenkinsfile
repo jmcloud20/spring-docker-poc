@@ -16,7 +16,7 @@ pipeline{
             steps{
                 echo "========Stage 1 - Test then package========"
                 // For windows machine.
-                sh 'mvn package'
+                sh 'mvn verify'
                 // For linux machine
                 // sh 'mvn clean package'
             }
@@ -63,6 +63,7 @@ pipeline{
                 
                 echo "-- Run image on current machine."
                 //sh "docker run -p 8080:8080 -v d:/tmp/sample-maven-app:/usr/src/sample-maven-app/conf -v c:/Users/81255820/.m2:/root/.m2 --name sample-maven-app --rm jmgarcia214/sample-maven-app:latest > /dev/null"
+                sh "docker-compose up"
             }
         }        
     }
