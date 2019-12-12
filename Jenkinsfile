@@ -16,7 +16,7 @@ pipeline{
             steps{
                 echo "========Stage 1 - Test then package========"
                 // For windows machine.
-                bat 'mvn clean test'
+                bat 'mvn package'
                 // For linux machine
                 // sh 'mvn clean package'
             }
