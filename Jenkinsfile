@@ -3,6 +3,17 @@ pipeline{
     * the jenkins workspace / environment for the entire pipeline.
     */
     agent any
+
+    /**
+    * Environment variables
+    **/
+    environment{
+        SLACK_CHANNEL = "#general"
+        SLACK_TEAM_DOMAIN = "pccworg"
+        SLACK_TOKEN = credentials("usuSg46i7hW0jov913CAGevu")
+        STACK_PREFIX = "sample-maven-app"
+    }
+
     stages{       
         // Template for new stage  - Description
         // stage("Stage  - Description"){
@@ -63,7 +74,28 @@ pipeline{
                 
                 echo "-- Run image on current machine."
                 //sh "docker run -p 8080:8080 -v d:/tmp/sample-maven-app:/usr/src/sample-maven-app/conf -v c:/Users/81255820/.m2:/root/.m2 --name sample-maven-app --rm jmgarcia214/sample-maven-app:latest > /dev/null"
-                sh "docker-compose up"
+                //sh "docker-compose up > /dev/null"
+            }
+            post {
+                success {
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "good",
+                        message: "${env.STACK_PREFIX} local deploy: Access service> - <${env.BUILD_URL}|Check build>"
+                    )
+                }
+
+                failure {
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "danger",
+                      message: "${env.STACK_PREFIX} local deploy failed:  <${env.BUILD_URL}|Check build>"
+                    )
+                }
             }
         }        
     }

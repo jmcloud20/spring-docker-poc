@@ -1,5 +1,8 @@
 version: '3'
 services:
+  compile:
+    build:
+      context: .
   spring-maven-sample:
     image: jmgarcia214/sample-maven-app
     ports:
