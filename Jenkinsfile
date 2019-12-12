@@ -8,6 +8,7 @@ pipeline{
         stage("Stage 1 - Check out from SCM"){
             steps{
                 echo "========Stage 1 - Check out from SCM========"
+                checkout scm
             }
         }
 
