@@ -36,12 +36,12 @@ pipeline{
                 echo "========Stage 2 - Create / Update a docker image========"
                 // For windows machine.
                 // Create a build and tag image according to jenkins BUILD_NUMBER
-                bat 'docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}'
+                bat "docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
                 // Update latest image version
-                bat 'docker tag jmgarcia214/sample-maven-app:latest jmgarcia214:sample-maven-app:${env.BUILD_NUMBER}
+                bat "docker tag jmgarcia214/sample-maven-app:latest jmgarcia214:sample-maven-app:${env.BUILD_NUMBER}""
                 // Push both version and latest image.
-                bat 'docker push jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}'
-                bat 'docker push jmgarcia214/sample-maven-app:latest'
+                bat "docker push jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
+                bat "docker push jmgarcia214/sample-maven-app:latest"
                 // For linux machine
                 // sh docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}
             }
