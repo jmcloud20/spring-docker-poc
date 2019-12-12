@@ -1,0 +1,8 @@
+version: '3'
+services:
+  spring-maven-sample:
+    image: jmgarcia214/sample-maven-app
+    ports:
+    - "8080:8080"
+    volumes:
+    - d:/tmp/sample-maven-app/sample-external-file.properties:/usr/src/sample-maven-app/conf/sample-external-file.properties
