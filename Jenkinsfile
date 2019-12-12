@@ -10,7 +10,7 @@ pipeline{
     environment{
         SLACK_CHANNEL = "#general"
         SLACK_TEAM_DOMAIN = "pccworg"
-        SLACK_TOKEN = credentials("usuSg46i7hW0jov913CAGevu")
+        SLACK_TOKEN = "usuSg46i7hW0jov913CAGevu"
         STACK_PREFIX = "sample-maven-app"
     }
 
