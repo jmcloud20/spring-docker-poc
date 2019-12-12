@@ -47,6 +47,15 @@ pipeline{
             }
         }
 
+        // Stage 3  - Deploy Image
+        stage("Stage 3  - Deploy image to current workspace."){
+            steps{
+                echo "========Stage - Deploy Image========"
+                // Run image on current machine.
+                bat "docker run -p 8080:8080 -v d:/tmp/sample-maven-app:/usr/src/sample-maven-app/conf -v c:/Users/81255820/.m2:/root/.m2 --name sample-maven-app --rm jmgarcia214/sample-maven-app:latest"
+            }
+        }
+
         // Stage  - Description
         // stage("Stage  - Description"){
         //     steps{
