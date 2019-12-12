@@ -56,7 +56,7 @@ pipeline{
                 echo "========Stage - Deploy Image========"
 
                 echo "-- make sure container sample-maven-app is not running."
-                bat "docker stop sample-maven-app:latest"
+                bat "docker stop sample-maven-app"
 
                 echo "-- make sure image sample-maven-app does not exist."
                 bat "docker rmi jmgarcia214/sample-maven-app:latest"
