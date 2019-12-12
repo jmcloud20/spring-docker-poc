@@ -35,9 +35,23 @@ pipeline{
                 success{
                     echo "========Success Stage 1 - Archiving successful build========"
                     archiveArtifacts artifacts : '**/*.war'
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "good",
+                        message: "${env.STACK_PREFIX} local deploy: Access service> - <${env.BUILD_URL}|Check build>"
+                    )
                 }
                 failure{
                     echo "========Failed Stage 1 - Build, Test then package========"
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "danger",
+                      message: "${env.STACK_PREFIX} local deploy failed:  <${env.BUILD_URL}|Check build>"
+                    )
                 }
             }
         }
@@ -58,6 +72,27 @@ pipeline{
                 sh "docker push jmgarcia214/sample-maven-app:latest"
                 // For linux machine
                 // sh docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}
+            }
+            post {
+                success {
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "good",
+                        message: "${env.STACK_PREFIX} local deploy: Access service> - <${env.BUILD_URL}|Check build>"
+                    )
+                }
+
+                failure {
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "danger",
+                      message: "${env.STACK_PREFIX} local deploy failed:  <${env.BUILD_URL}|Check build>"
+                    )
+                }
             }
         }
 
