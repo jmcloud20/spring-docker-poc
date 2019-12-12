@@ -2,6 +2,7 @@
 # Author: Joseph M. Garcia
 # Date: 12/12/2019
 # Description : Manage docker image versioning.
+# TODO: Not yet tested.
 
 # 1st param
 IMAGE=$1
