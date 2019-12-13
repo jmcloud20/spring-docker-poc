@@ -36,8 +36,8 @@ COPY --from=MAVEN_BUILD /build/target/spring-docker-poc.war .
 ADD conf/sample-external-file.properties ./conf
 
 # Run the spring application using the defined property file.
-# ENTRYPOINT [ "java","-jar","/build/target/spring-docker-poc.war","--spring.config.location=conf/sample-external-file.properties" ]
-ENTRYPOINT [ "java","-jar","/usr/src/sample-maven-app/spring-docker-poc.war","--spring.config.location=conf/sample-external-file.properties" ]
+# ENTRYPOINT [ "java","-jar","/usr/src/sample-maven-app/spring-docker-poc.war","--spring.config.location=conf/sample-external-file.properties" ]
+ENTRYPOINT java -jar /usr/src/sample-maven-app/spring-docker-poc.war --spring.config.location=conf/sample-external-file.properties
 
 # Expose port 8080
 EXPOSE 8080
