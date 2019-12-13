@@ -1,9 +1,9 @@
 version: '3'
 services:
-  compile:
+  web:
     build:
       context: .
-  spring-maven-sample:
+      dockerfile: Dockerfile.dev
     image: jmgarcia214/sample-maven-app
     ports:
     - "8080:8080"

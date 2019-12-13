@@ -55,7 +55,7 @@ pipeline{
                 // For windows machine.
                 
                 echo "-- Create a build and tag image according to jenkins BUILD_NUMBER"
-                sh "docker build . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
+                sh "docker build -f Dockerfile.dev . -t jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
                 
                 echo "-- Update latest image version" 
                 sh "docker tag jmgarcia214/sample-maven-app:latest jmgarcia214/sample-maven-app:${env.BUILD_NUMBER}"
